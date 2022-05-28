@@ -1,0 +1,21 @@
+{
+  "name": "twys-job",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Damar Nur Ichwan",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.21.4",
+    "cheerio": "1.0.0-rc.10",
+    "dni-file-system": "1.0.3",
+    "dotenv": "16.0.1",
+    "nodemailer": "6.7.2",
+    "nodemailer-smtp-transport": "2.7.4",
+    "winston": "3.7.2"
+  }
+}

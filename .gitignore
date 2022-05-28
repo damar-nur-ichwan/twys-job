@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+.env
+package-lock.json
+data/history/*
+data/log/*
+data/overview/*
+data/ratio/*
+data/technical/*
+data/time.json
+data/urls.json
