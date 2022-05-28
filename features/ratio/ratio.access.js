@@ -3,7 +3,7 @@ const serviceName = 'ratio'
 
 // Libraries
 const { default: axios } = require('axios')
-const { ReadFile, CreateFile } = require('dni-file-system')
+const { CreateFile, UpdateFile } = require('dni-file-system')
 const { twys } = require('../../configs')
 const { logger } = require("../../utils/utils")
 
@@ -25,7 +25,7 @@ const getUrls = async () => {
             } 
         }
         const urls = await axios.get(target, config)
-
+        
         // save urls
         await CreateFile(`./data/urls.json`,JSON.stringify(urls.data))
         await UpdateFile(`./data/urls.json`,JSON.stringify(urls.data))

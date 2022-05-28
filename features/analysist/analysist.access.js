@@ -1,6 +1,3 @@
-// Service name
-const serviceName = 'analysist'
-
 // Libraries
 const { default: axios } = require('axios')
 const { ReadFile, CreateFile, UpdateFile } = require('dni-file-system')
