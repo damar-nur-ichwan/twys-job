@@ -4,10 +4,10 @@ const cheerio = require('cheerio')
 const date = require('../../data/time.json')['full']
 
 // SCRAPE ELEMENTS: to scrape all elements
-const scrape = async (elements = {}) => {
+const scrape = async (elements = {}, code = '') => {
     
     // Variables
-    let code = '', name='', dividends=[], temp=[]
+    let name='', dividends=[], temp=[]
     let $ = cheerio.load(elements)
 
     // Scrape code & name

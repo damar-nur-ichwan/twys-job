@@ -26,10 +26,10 @@ const service = async () => {
         const elements = await getElements(investing)
 
         // Scrape
-        const data = scrape(elements)
+        const data = scrape(elements, code)
 
         // Push to Output
-        output.push(await data)
+        output.push({code, data})
 
         // Info
         console.info(i, `${code} ${serviceName} scraped`)

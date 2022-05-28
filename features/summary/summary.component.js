@@ -4,16 +4,15 @@ const cheerio = require('cheerio')
 const date = require('../../data/time.json')['full']
 
 // SCRAPE ELEMENTS: to scrape all elements
-const scrape = async (elements = {}) => {
+const scrape = async (elements = {}, code = '') => {
     
     // Variables
-    let code = '', name='', summary=''
+    let name='', summary=''
     let $ = cheerio.load(elements)
 
     // Scrape code & name
     $('h1').each(function (i, e) {
         value = $(e).first().text();
-        code = value.substring(value.length-1,value.length-6).replace(')','').replace('(','').replace('_p','')
         name = value.substring(value.length-8,0)
     })
 
