@@ -103,7 +103,7 @@ const getOverview = async (code = '') => {
     // Post Data
     try {
         const response = await axios.get(target, config)
-        const volume = numberWithCommas(response.data.data.volume)
+        const volume = numberWithCommas(response.data.volume)
         return volume
     } catch (err) {
         logger.error({ layer, message: err })

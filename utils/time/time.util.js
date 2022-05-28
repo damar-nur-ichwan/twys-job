@@ -15,6 +15,8 @@ async function time(url=''){
         const output = {
             timestamp,
             hours: parseInt(newRes[1].split(':')[0]),
+            minutes: parseInt(newRes[1].split(':')[1]),
+            seconds: parseInt(newRes[1].split(':')[2]),
             full
         }
 

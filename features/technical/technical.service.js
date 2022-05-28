@@ -5,7 +5,7 @@ const serviceName = 'technical'
 const { getUrls, getElements, postData } = require(`./${serviceName}.access`)
 const { scrape, checkVolume } = require(`./${serviceName}.component`)
 
-const service = async () => {
+const service = async (analysist = async function(){}, share = async function(){}) => {
 
     // checking 
     const check = await checkVolume()
@@ -58,6 +58,8 @@ const service = async () => {
             output = []
         }
     }
+    await analysist()
+    await share()
     return true
 }
 
