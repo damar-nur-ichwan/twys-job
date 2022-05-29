@@ -10,9 +10,9 @@ const time = require('../utils/time/time.util')
 
 const job = async () => {
     await time()
-    setInterval( async () => {
-        email()
+    setInterval( async () => {        
         const { hours, minutes, seconds } = await time()
+        if(hours >= 7) email()
         if(hours === 12 && minutes === 30 && seconds < 15) profile()
         if(hours === 13 && minutes === 30 && seconds < 15) summary()
         if(hours === 14 && minutes === 30 && seconds < 15) dividend()
