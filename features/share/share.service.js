@@ -1,6 +1,3 @@
-// Service Name
-const serviceName = 'share'
-
 const { numberWithCommas } = require('../../utils/utils')
 // Libraries
 const { Discord } = require('./share.access')

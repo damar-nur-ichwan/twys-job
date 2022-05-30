@@ -1,11 +1,11 @@
 // Libraries
-let { logics, action } = require('../../utils/utils');
+let { logics, action, time } = require('../../utils/utils');
 const { UpdateFile, CreateFile, ReadFile } = require('dni-file-system');
 
-const tehnicalAnalysist = async (input = []) => {
+const tehnicalAnalysist = async (input = {}, code = '') => {
     
     // Get input values
-    const time = Object.keys(input)
+    const timeInput = Object.keys(input)
     input = Object.values(input)
 
 
@@ -22,7 +22,7 @@ const tehnicalAnalysist = async (input = []) => {
 
     // Variables
     const last = input[input.length -1], first = input[0]
-    const code = last.code, change = last.change, 
+    const change = last.change, 
     join_from = first.date, notification_date = last.date, price = last.price,
     volume = parseInt(last.id.replace(/,/g,''))
     let bestIncome = { code, logic: 0, total_income: 0, history: {}, win_rate: 0, total_trade: 0}
@@ -42,7 +42,7 @@ const tehnicalAnalysist = async (input = []) => {
                         buyPriceList=[]
                         total_trade++
                         if(date['income'] > 0) total_win++
-                        history[time[index]] = date
+                        history[timeInput[index]] = date
                     }
                 }
                 if(date.action === 'Buy') {
@@ -52,7 +52,7 @@ const tehnicalAnalysist = async (input = []) => {
                     buyPriceList.map((nominal) => {sumBuyPrice += nominal})
                     avgBuyPrice = sumBuyPrice / buyPriceList.length
                     date['income'] = 0
-                    history[time[index]] = date
+                    history[timeInput[index]] = date
                 }
             })
             win_rate = parseFloat(((total_win / total_trade) * 100).toFixed(2)) || 0
@@ -73,7 +73,7 @@ const tehnicalAnalysist = async (input = []) => {
     total_loss_count = 0, total_win = 0, total_loss = 0, total_match_count = 0, lowest_income = 100, higest_income = -100,
     buy_price = [], trading = false, tomorrow_action = 'Neutral'
     const historyTime = Object.keys(bestIncome.history)
-    const nowTime = parseInt(require('../../data/time.json')['timestamp']/1000) - 21600
+    const nowTime = parseInt(time()['timestamp']/1000) - 21600
     Object.values(bestIncome.history).map((date, index)=>{
         if(historyTime[index] > nowTime) tomorrow_action = date.action
         switch(date.action){
@@ -135,10 +135,9 @@ const tehnicalAnalysist = async (input = []) => {
 }
 
 
-const financialAnalysist = async (input = []) => {
+const financialAnalysist = async (input = {}, code = '') => {
 
     // Variables
-    const code = input.code
     const param = {
         EPS : "EPS(MRQ) vs Qtr. 1 Yr. Ago MRQ",
         PER : "P/E Ratio TTM",
@@ -149,16 +148,19 @@ const financialAnalysist = async (input = []) => {
     }
 
     let EPS = false, PER = false, PBV = false, ROE = false, DER = false, DY = false, rate = [0,0,0,0,0,0], financial_rate = 0
-    input.ratios.map(({name, company, industry}) =>{
-        company = parseFloat(company)
-        industry = parseFloat(industry)
-        if(name === param['EPS'] && company > 0) {EPS = true, rate[0] = 1}
-        if(name === param['PER'] && company < industry) {PER = true, rate[1] = 1}
-        if(name === param['PBV'] && company < industry) {PBV = true, rate[2] = 1}
-        if(name === param['ROE'] && company > industry) {ROE = true, rate[3] = 1}
-        if(name === param['DER'] && company < 100) {DER = true, rate[4] = 1}
-        if(name === param['DY'] && company > 0) {DY = true, rate[5] = 1}
-    })
+    const ratios = input.ratios || []
+    if (ratios) {
+        ratios.map(({name, company, industry}) =>{
+            company = parseFloat(company)
+            industry = parseFloat(industry)
+            if(name === param['EPS'] && company > 0) {EPS = true, rate[0] = 1}
+            if(name === param['PER'] && company < industry) {PER = true, rate[1] = 1}
+            if(name === param['PBV'] && company < industry) {PBV = true, rate[2] = 1}
+            if(name === param['ROE'] && company > industry) {ROE = true, rate[3] = 1}
+            if(name === param['DER'] && company < 100) {DER = true, rate[4] = 1}
+            if(name === param['DY'] && company > 0) {DY = true, rate[5] = 1}
+        })
+    }
     rate.map((score) => financial_rate += score)
 
     // Get Last Overview & update, then save it

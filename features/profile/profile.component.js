@@ -1,7 +1,8 @@
 const cheerio = require('cheerio')
+const { time } = require('../../utils/utils')
 
 // Libraries
-const date = require('../../data/time.json')['full']
+const date = time()['full']
 
 // SCRAPE ELEMENTS: to scrape all elements
 const scrape = (elements = {}, code = '') => {

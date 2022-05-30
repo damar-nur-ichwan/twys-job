@@ -1,4 +1,3 @@
-const { logger } = require("../../utils/utils")
 const { getTechnical, getRatio, downloadTechnical, postData } = require("./analysist.access")
 const { tehnicalAnalysist, financialAnalysist } = require("./analysist.component")
 
@@ -12,13 +11,13 @@ const service = async () => {
 
     // Get All Technicals
     await downloadTechnical()
-    logger.info(`All technicals downloaded`)
+    console.info(`All technicals downloaded`)
 
     // Get Codes
     const codes = await getUrls()
 
     // Loop
-    logger.info(`Analyzing...`)
+    console.info(`Analyzing...`)
     for(let i = 0; i < codes.length; i++){
 
         // Variables
@@ -28,15 +27,15 @@ const service = async () => {
         const technical = await getTechnical(code)
 
         // Tehnical analysist
-        await tehnicalAnalysist(technical)
+        await tehnicalAnalysist(technical, code)
 
         // Get ratio
         const ratio = await getRatio(code)
-
+       
         // Financial analysist
-        await financialAnalysist(ratio)
+        await financialAnalysist(ratio, code)
     }
-    logger.info(`Analysist done`)
+    console.info(`Analysist done`)
 
     // Saving
     let histories = [], overviews = []
@@ -58,7 +57,7 @@ const service = async () => {
             overviews = []
         }
     }
-    logger.info(`history & overview updated`)
+    console.info(`history & overview updated`)
 }
 
 module.exports = service

@@ -1,9 +1,10 @@
 const app = require('../../package.json')
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
+const { full } = require('../time/time.util')
 
 const myFormat = printf(({ level, message, layer, timestamp, __dirname }) => {
-  return `${timestamp} [${level}] [${layer}] ${message} ${__dirname||''}`;
+  return `${full} [${level}] [${layer}] ${message} ${__dirname||''}`;
 });
 
 const logger = { 
@@ -20,7 +21,7 @@ const logger = {
         host: process.env.HOST,
         appname: app.name,
         version: app.version,
-        time: new Date(),
+        time: full,
       },
     transports: [
       new transports.Console()

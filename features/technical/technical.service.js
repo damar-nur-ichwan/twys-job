@@ -1,3 +1,5 @@
+const { time } = require("../../utils/utils")
+
 // Service Name
 const serviceName = 'technical'
 
@@ -21,8 +23,7 @@ const service = async (analysist = async function(){}, share = async function(){
     const urls = await getUrls()
 
     // Get Time
-    const { timestamp } = require('../../data/time.json')
-    const time = parseInt(timestamp / 1000)
+    const timestamp = parseInt(time()['timestamp'] / 1000)
 
     // Define Output
     let output = []
@@ -37,7 +38,7 @@ const service = async (analysist = async function(){}, share = async function(){
         const elements = await getElements(investing)
 
         // Scrape
-        const data = {code, data: {[time]: scrape(elements, code)}}
+        const data = {code, data: {[timestamp]: scrape(elements, code)}}
 
         // Push to Output
         output.push(data)

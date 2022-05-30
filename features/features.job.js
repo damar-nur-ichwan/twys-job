@@ -6,19 +6,21 @@ const technical = require('./technical/technical.service')
 const email = require('./email/email.service')
 const analysist = require('./analysist/analysist.service')
 const share = require('./share/share.service')
-const time = require('../utils/time/time.util')
+const { time } = require('../utils/utils')
 
-const job = async () => {
-    await time()
-    setInterval( async () => {        
-        const { hours, minutes, seconds } = await time()
-        if(hours >= 7) email()
-        if(hours === 12 && minutes === 30 && seconds < 15) profile()
-        if(hours === 13 && minutes === 30 && seconds < 15) summary()
-        if(hours === 14 && minutes === 30 && seconds < 15) dividend()
-        if(hours === 15 && minutes === 30 && seconds < 15) ratio()
-        if(hours === 16 && minutes === 30 && seconds < 15) technical(analysist, share)
+const job = () => {
+    setInterval(() => {
+        const { hours, minutes, seconds } = time()
+        if(hours >= 7 && hours <= 23) email()
+        if(minutes === 30 && seconds < 15) {
+            switch(hours){
+                case 12: profile(); break;
+                case 13: summary(); break;
+                case 14: dividend(); break;
+                case 15: ratio(); break;
+                case 16: technical(analysist, share); break;
+            }
+        }
     }, 15 * 1000)
 }
-
 module.exports = job
