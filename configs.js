@@ -11,7 +11,8 @@ const twys = {
         "ratio": '/api/data/ratio',
         "summary": '/api/data/summary',
         "technical": '/api/data/technical',
-        "email": '/api/data/email'
+        "email": '/api/data/email',
+        "url": '/api/data/url'
     }
 }
 

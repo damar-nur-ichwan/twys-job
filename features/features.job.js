@@ -3,6 +3,7 @@ const profile = require('./profile/profile.service')
 const ratio = require('./ratio/ratio.service')
 const summary = require('./summary/summary.service')
 const technical = require('./technical/technical.service')
+const url = require('./url/url.service')
 const email = require('./email/email.service')
 const analysist = require('./analysist/analysist.service')
 const share = require('./share/share.service')
@@ -14,6 +15,7 @@ const job = () => {
         if(hours >= 7 && hours <= 23) email()
         if(minutes === 30 && seconds < 15) {
             switch(hours){
+                case 11: url(); break;
                 case 12: profile(); break;
                 case 13: summary(); break;
                 case 14: dividend(); break;
